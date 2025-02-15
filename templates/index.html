@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Experto Médico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema Experto de Diagnóstico Médico</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="sintomas">Ingrese síntomas separados por comas:</label>
+                <input type="text" id="sintomas" name="sintomas" 
+                       placeholder="Ejemplo: fiebre, tos, dolor de cabeza" required>
+            </div>
+            <button type="submit">Diagnosticar</button>
+        </form>
+
+        {% if diagnostico %}
+        <div class="resultado">
+            <h2>Resultados del Diagnóstico:</h2>
+            {% for resultado in diagnostico %}
+            <div class="diagnostico-item">
+                <div class="diagnostico-titulo">{{ resultado.enfermedad }}</div>
+                <div class="diagnostico-descripcion">
+                    {{ resultado.descripcion }}
+                </div>
+                <div class="recomendaciones">
+                    <h4>Recomendaciones:</h4>
+                    <ul>
+                        {% for recomendacion in resultado.recomendaciones %}
+                        <li>{{ recomendacion }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
